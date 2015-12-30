@@ -12,6 +12,8 @@ module Strava
         if path =~ /^https?:\/\//
           tempfile = Tempfile.new 'tx_remote_config'
           tempfile.write(open(path) { |remote_config_file| remote_config_file.read })
+          tempfile.flush
+          tempfile.close
           path = tempfile.path
         end
         binding.pry

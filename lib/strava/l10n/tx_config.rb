@@ -8,7 +8,7 @@ module Strava
     class TxConfig
       def initialize(path)
         if path =~ /^https?:\/\//
-          tempfile = Tempfile.new
+          tempfile = Tempfile.new 'tx_remote_config'
           tempfile.write(open(path) { |remote_config_file| remote_config_file.read })
           path = tempfile.path
         end

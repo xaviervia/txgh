@@ -8,7 +8,6 @@ module Strava
   module L10n
     class TxConfig
       def initialize(path)
-        binding.pry
         if path =~ /^https?:\/\//
           tempfile = Tempfile.new 'tx_remote_config'
           tempfile.write(open(path) { |remote_config_file| remote_config_file.read })
@@ -16,7 +15,6 @@ module Strava
           tempfile.close
           path = tempfile.path
         end
-        binding.pry
 
         config = ParseConfig.new(path)
         @resources = []

@@ -2,7 +2,6 @@ require 'parseconfig'
 require 'strava/l10n/tx_resource'
 require 'open-uri'
 require 'tempfile'
-require 'pry'
 
 module Strava
   module L10n

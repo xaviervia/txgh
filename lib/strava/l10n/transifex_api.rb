@@ -1,7 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
-require 'pry'
 
 module Strava
   module L10n
@@ -36,7 +35,6 @@ module Strava
             content: content_part,
         }
         project = tx_resource.project_slug
-        binding.pry
         if resource_exists?(tx_resource)
           url = "#{API_ROOT}/project/#{project}/resource/#{slug}/content/"
           method = @connection.method :put
@@ -44,7 +42,7 @@ module Strava
           url = "#{API_ROOT}/project/#{project}/resources/"
           method = @connection.method :post
           payload[:slug] = slug
-          payload[:name] = tx_resource.source_file
+          payload[:name] = slug
           payload[:i18n_type] = tx_resource.type
         end
         response = method.call url, payload

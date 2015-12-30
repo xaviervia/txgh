@@ -10,7 +10,11 @@ module Strava
       def initialize(path)
         if path =~ /^https?:\/\//
           tempfile = Tempfile.new 'tx_remote_config'
-          tempfile.write(open(path) { |remote_config_file| remote_config_file.read })
+          config_text = open(path) { |remote_config_file| remote_config_file.read }
+          puts "## CONFIG ##"
+          puts config_text
+          puts "## /CONFIG ##"
+          tempfile.write config_text
           tempfile.flush
           tempfile.close
           path = tempfile.path

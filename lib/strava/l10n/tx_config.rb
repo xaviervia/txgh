@@ -1,10 +1,18 @@
 require 'parseconfig'
 require 'strava/l10n/tx_resource'
+require 'open-uri'
+require 'tempfile'
 
 module Strava
   module L10n
     class TxConfig
       def initialize(path)
+        if path ~= /^https?:\/\//
+          tempfile = Tempfile.new
+          tempfile.write(open path do { |remote_config_file| remote_config_file.read })
+          path = tempfile.path
+        end
+
         config = ParseConfig.new(path)
         @resources = []
         config.get_groups().each do |group|

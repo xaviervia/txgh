@@ -9,7 +9,7 @@ module Strava
       def initialize(path)
         if path =~ /^https?:\/\//
           tempfile = Tempfile.new 'tx_remote_config'
-          config_text = open(path) { |remote_config_file| remote_config_file.read }
+          config_text = `curl #{path}`
           puts "## CONFIG ##"
           puts config_text
           puts "## /CONFIG ##"

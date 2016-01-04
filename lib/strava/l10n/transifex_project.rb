@@ -10,22 +10,21 @@ module Strava
         @name = project_name
         Strava::Config::KeyManager.load_yaml(nil,project_name)
         @config = Strava::Config::KeyManager.transifex_project_config
-        @tx_config = Strava::L10n::TxConfig.new(@config['tx_config'])
       end
 
       def github_repo
         @github_repo = @github_repo ||
             Strava::L10n::GitHubRepo.new(@config['push_translations_to'])
       end
-      
+
       def resource(slug)
-        @tx_config.resources.each do |resource|
+        tx_config.resources.each do |resource|
           return resource if resource.resource_slug == slug
         end
       end
 
       def resources
-        @tx_config.resources
+        tx_config.resources
       end
 
       def api
@@ -34,13 +33,16 @@ module Strava
       end
 
       def lang_map(tx_lang)
-        if @tx_config.lang_map.include?(tx_lang)
-          @tx_config.lang_map[tx_lang]
+        if tx_config.lang_map.include?(tx_lang)
+          tx_config.lang_map[tx_lang]
         else
           tx_lang
-		end
+		    end
+      end
+
+      def tx_config
+        Strava::L10n::TxConfig.new(@config['tx_config'])
       end
     end
   end
 end
-
